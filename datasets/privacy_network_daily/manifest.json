@@ -1,6 +1,6 @@
 {
   "dataset": "privacy_network_daily",
-  "version": "0.2.0-phase2",
+  "version": "0.2.0",
   "rows": 8282,
   "coverage": {
     "xmr": {
@@ -62,5 +62,20 @@
       "license": "CC-BY-NC-4.0",
       "url": "https://community-api.coinmetrics.io/v4/timeseries/asset-metrics"
     }
-  ]
+  ],
+  "refresh": {
+    "observed_through_utc": "2026-11-23",
+    "new_rows": 0,
+    "revised_rows": 0,
+    "revision_first_utc": null,
+    "revision_last_utc": null,
+    "historical_audit": {
+      "assessed_utc": "2026-11-24",
+      "sample_through_utc": "2026-11-23",
+      "evidence_version": "phase2-2026-11-24",
+      "affected_from": null,
+      "affected_through": null,
+      "status": "original_scope_not_reaudited"
+    }
+  }
 }
