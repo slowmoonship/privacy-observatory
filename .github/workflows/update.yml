@@ -63,8 +63,21 @@ jobs:
           name: data-status
           path: data-status.json
           if-no-files-found: warn
-      - name: Upload Pages artifact (not deployed)
+      - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3.0.1
         with:
           path: dist
-# Deployment intentionally absent until separately authorized; see docs/pages-release.md.
+  deploy:
+    needs: update
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4.0.5

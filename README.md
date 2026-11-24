@@ -1,7 +1,8 @@
 # SlowMoonShip Privacy Observatory
 
-中文优先的隐私资产数据观察站；当前完成 V0.1 Phase 3 本地自动更新实现，线上运行尚待授权验证。重点为 Monero 与 Zcash，隐私协议作为辅助。
+中文优先的隐私资产数据观察站。重点为 Monero 与 Zcash，隐私协议作为辅助。
 
+- 网站：[slowmoonship.github.io/privacy-observatory/](https://slowmoonship.github.io/privacy-observatory/)
 - [数据源审计与许可](docs/source-audit.md)
 - [指标字典和实测样本](docs/metric-dictionary.md)
 - [V0.1 范围与下一阶段计划](docs/v0.1-scope.md)
@@ -20,7 +21,7 @@ python3 scripts/update_data.py
 npm run dev
 ```
 
-在浏览器打开终端打印的 `http://127.0.0.1:5173/`。数据文件已附带当时的实测快照，单个来源请求或校验失败时对应文件保持上次成功版本，脚本返回非零；页面按真实观测时间提示可能过期。`npm run build` 可验证生产构建。浏览器验收见 [验收报告](docs/acceptance/report.md)。自动更新工作流已准备，尚未推送或公开部署；见 [数据更新与故障处理](docs/data-operations.md)、[Phase 3 验收](docs/phase3-acceptance.md)和 [Pages 发布指南](docs/pages-release.md)。
+在浏览器打开终端打印的 `http://127.0.0.1:5173/`。数据文件已附带当时的实测快照，单个来源请求或校验失败时对应文件保持上次成功版本，脚本返回非零；页面按真实观测时间提示可能过期。`npm run build` 可验证生产构建。浏览器验收见 [验收报告](docs/acceptance/report.md)。每日自动更新与 GitHub Pages 由同一工作流处理；见 [数据更新与故障处理](docs/data-operations.md)、[Phase 3 验收](docs/phase3-acceptance.md)和 [Pages 发布指南](docs/pages-release.md)。
 
 ## 数据与统计口径
 
