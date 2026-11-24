@@ -1,0 +1,56 @@
+{
+  "dataset": "privacy_market_daily",
+  "version": "0.2.0-phase2",
+  "rows": 8282,
+  "coverage": {
+    "xmr": {
+      "start": "2014-04-18",
+      "end": "2026-11-23",
+      "rows": 4603,
+      "valid": {
+        "market_cap_usd": {
+          "start": "2014-05-20",
+          "end": "2026-11-23",
+          "null_rows": 32
+        }
+      }
+    },
+    "zec": {
+      "start": "2016-10-28",
+      "end": "2026-11-23",
+      "rows": 3679,
+      "valid": {
+        "market_cap_usd": {
+          "start": "2016-10-29",
+          "end": "2026-11-23",
+          "null_rows": 1
+        }
+      }
+    }
+  },
+  "release_qualification": {
+    "status": "Ready",
+    "assessed_utc": "2026-11-24"
+  },
+  "files": {
+    "privacy_market_daily.csv": {
+      "sha256": "d1c6f1bf18413730a18bf09d91915e010efd9ccbea20ecf373ac4846b239b6fb",
+      "bytes": 445536
+    },
+    "privacy_market_daily.parquet": {
+      "sha256": "cf32a9f1f82b05ab376507ec499901ea95231d2c192ad674812e2e57604772a4",
+      "bytes": 168837
+    },
+    "schema.json": {
+      "sha256": "0f4d259f7921898c5ebf6523b409225971ed88d2df4df890acad815b3398871b",
+      "bytes": 1012
+    }
+  },
+  "sources": [
+    {
+      "publisher": "Coin Metrics Community Data",
+      "license": "CC-BY-NC-4.0",
+      "url": "https://community-api.coinmetrics.io/v4/timeseries/asset-metrics"
+    }
+  ]
+}

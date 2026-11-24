@@ -1,0 +1,66 @@
+{
+  "dataset": "privacy_network_daily",
+  "version": "0.2.0-phase2",
+  "rows": 8282,
+  "coverage": {
+    "xmr": {
+      "start": "2014-04-18",
+      "end": "2026-11-23",
+      "rows": 4603,
+      "valid": {
+        "transaction_count": {
+          "start": "2014-04-18",
+          "end": "2026-11-23",
+          "null_rows": 0
+        },
+        "current_supply_native": {
+          "start": "2014-04-18",
+          "end": "2026-11-23",
+          "null_rows": 0
+        }
+      }
+    },
+    "zec": {
+      "start": "2016-10-28",
+      "end": "2026-11-23",
+      "rows": 3679,
+      "valid": {
+        "transaction_count": {
+          "start": "2016-10-28",
+          "end": "2026-11-23",
+          "null_rows": 0
+        },
+        "current_supply_native": {
+          "start": "2016-10-28",
+          "end": "2026-11-23",
+          "null_rows": 0
+        }
+      }
+    }
+  },
+  "release_qualification": {
+    "status": "Ready with limitations",
+    "assessed_utc": "2026-11-24"
+  },
+  "files": {
+    "privacy_network_daily.csv": {
+      "sha256": "c22f069a1d851b81c9ae9a5e2701cdfdf0bea5235fd0d894aa246525cbebcfe1",
+      "bytes": 373478
+    },
+    "privacy_network_daily.parquet": {
+      "sha256": "c92bae6a642b79ef3d4cb18b27a6b371c1b5f0bdcd6c11e1259d3f4371c8ee87",
+      "bytes": 143989
+    },
+    "schema.json": {
+      "sha256": "684a96c65c88d057bdb4d6ae577b5a830708faf40c404494a599e96eb5163e3b",
+      "bytes": 1259
+    }
+  },
+  "sources": [
+    {
+      "publisher": "Coin Metrics Community Data",
+      "license": "CC-BY-NC-4.0",
+      "url": "https://community-api.coinmetrics.io/v4/timeseries/asset-metrics"
+    }
+  ]
+}

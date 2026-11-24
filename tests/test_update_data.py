@@ -9,9 +9,20 @@ class PipelineTests(unittest.TestCase):
         self.out=pathlib.Path(self.temp.name)/'public'/'data'; self.out.mkdir(parents=True)
         self.status=pathlib.Path(self.temp.name)/'status.json'
         self.original={}
-        for group in m.GROUPS:
-            text=(ROOT/'public'/'data'/f'{group}.json').read_text(); (self.out/f'{group}.json').write_text(text)
-            self.original[group]=json.loads(text)['metrics']
+        # Synthetic fixtures retain the V0.1 checks without distributing old pool snapshots.
+        for group, keys in m.REQUIRED.items():
+            data = {}
+            for key in sorted(keys):
+                unit = ('USD' if key.endswith(('_market','_market_history')) else '笔/日' if key.endswith('_tx')
+                        else '%' if key == 'shieldedPct' else 'XMR' if key == 'xmr_supply' else 'ZEC')
+                source = {'market': 'PriFi.info / Coin Metrics Community Data',
+                          'activity': 'Coin Metrics Community Data', 'pools': 'ZecStats'}[group]
+                license_name = 'CC BY 4.0' if group == 'pools' else 'CC BY-NC 4.0'
+                points = [['2026-01-01', 2]] if key.endswith(('_market_history', '_tx')) else None
+                data[key] = m.metric(key, 2, unit, source, 'https://example.org/fixture', license_name,
+                                     'Synthetic test fixture', '2026-01-01T00:00:00Z', points)
+            self.original[group] = data
+            (self.out/f'{group}.json').write_text(json.dumps({'generated_at':m.FETCHED,'metrics':data}))
         snapshot_now=max(dt.datetime.fromisoformat(item['data_as_of'].replace('Z','+00:00')) for group in self.original.values() for item in group.values())+dt.timedelta(hours=1)
         self.patches=[patch.object(m,'OUT',self.out),patch.object(m,'NOW',snapshot_now),patch.dict(os.environ,{'DATA_STATUS_PATH':str(self.status)})]
         for p in self.patches: p.start(); self.addCleanup(p.stop)

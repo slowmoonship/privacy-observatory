@@ -1,0 +1,16 @@
+{
+  "dataset": "zcash_value_pools_daily",
+  "version": "0.2.0-phase2",
+  "rows": 118,
+  "coverage": {
+    "zec": {
+      "start": "2026-07-30",
+      "end": "2026-11-24",
+      "rows": 118
+    }
+  },
+  "release_qualification": {
+    "status": "Blocked",
+    "assessed_utc": "2026-11-24"
+  }
+}

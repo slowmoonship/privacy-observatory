@@ -1,0 +1,54 @@
+{
+  "primary_key": [
+    "asset_id",
+    "date_utc"
+  ],
+  "grain": "每个 UTC 日与资产一行",
+  "csv": {
+    "encoding": "UTF-8",
+    "null": "",
+    "dates": "ISO 8601"
+  },
+  "fields": [
+    {
+      "name": "date_utc",
+      "type": "date32[day]",
+      "nullable": false,
+      "unit": null,
+      "description": "来源 UTC 日标签",
+      "null_rule": "禁止为空"
+    },
+    {
+      "name": "asset_id",
+      "type": "string",
+      "nullable": false,
+      "unit": null,
+      "description": "资产代码，小写 xmr 或 zec",
+      "null_rule": "禁止为空"
+    },
+    {
+      "name": "transaction_count",
+      "type": "int64",
+      "nullable": true,
+      "unit": "transactions/day",
+      "description": "Coin Metrics TxCnt，排除 Coinbase",
+      "null_rule": "源未报告"
+    },
+    {
+      "name": "current_supply_native",
+      "type": "decimal128(24, 12)",
+      "nullable": true,
+      "unit": "native asset (XMR or ZEC)",
+      "description": "Coin Metrics SplyCur",
+      "null_rule": "源未报告"
+    },
+    {
+      "name": "is_complete_utc_day",
+      "type": "bool",
+      "nullable": false,
+      "unit": null,
+      "description": "快照时该 UTC 日已经结束",
+      "null_rule": "禁止为空"
+    }
+  ]
+}

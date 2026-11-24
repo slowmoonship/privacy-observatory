@@ -1,1 +1,27 @@
-{"name":"privacy-observatory","private":true,"version":"0.1.0","type":"module","scripts":{"dev":"vite --host 127.0.0.1","build":"tsc --noEmit && vite build","preview":"vite preview --host 127.0.0.1"},"dependencies":{"echarts":"^6.0.0","react":"^19.0.0","react-dom":"^19.0.0"},"devDependencies":{"@types/react":"^19.0.0","@types/react-dom":"^19.0.0","@vitejs/plugin-react":"^5.0.0","playwright":"^1.0.0","typescript":"^5.0.0","vite":"^7.0.0"}}
+{
+  "name": "privacy-observatory",
+  "private": true,
+  "version": "0.2.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "predev": "python3 scripts/prepare_public_site.py",
+    "prebuild": "python3 scripts/prepare_public_site.py",
+    "postbuild": "python3 scripts/prepare_public_site.py --verify-dist dist"
+  },
+  "dependencies": {
+    "echarts": "^6.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^5.0.0",
+    "playwright": "^1.0.0",
+    "typescript": "^5.0.0",
+    "vite": "^7.0.0"
+  }
+}

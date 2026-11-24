@@ -1,0 +1,94 @@
+{
+  "primary_key": [
+    "protocol_id",
+    "chain_id"
+  ],
+  "grain": "每个协议与主网一行",
+  "csv": {
+    "encoding": "UTF-8",
+    "null": "",
+    "dates": "ISO 8601"
+  },
+  "fields": [
+    {
+      "name": "protocol_id",
+      "type": "string",
+      "nullable": false,
+      "unit": null,
+      "description": "稳定的小写协议 slug",
+      "null_rule": "禁止为空"
+    },
+    {
+      "name": "protocol_name",
+      "type": "string",
+      "nullable": false,
+      "unit": null,
+      "description": "官方展示名",
+      "null_rule": "禁止为空"
+    },
+    {
+      "name": "chain_id",
+      "type": "string",
+      "nullable": false,
+      "unit": null,
+      "description": "CAIP-2 主网标识",
+      "null_rule": "禁止为空"
+    },
+    {
+      "name": "chain_name",
+      "type": "string",
+      "nullable": false,
+      "unit": null,
+      "description": "公链展示名",
+      "null_rule": "禁止为空"
+    },
+    {
+      "name": "privacy_mechanism",
+      "type": "string",
+      "nullable": true,
+      "unit": null,
+      "description": "根据官方资料归纳的机制",
+      "null_rule": "未核实"
+    },
+    {
+      "name": "deployment_role",
+      "type": "string",
+      "nullable": true,
+      "unit": null,
+      "description": "代表性地址角色",
+      "null_rule": "未核实"
+    },
+    {
+      "name": "deployment_address",
+      "type": "string",
+      "nullable": true,
+      "unit": null,
+      "description": "官方文档列出的合约地址或 Program ID，保留大小写",
+      "null_rule": "未核实"
+    },
+    {
+      "name": "website_url",
+      "type": "string",
+      "nullable": false,
+      "unit": null,
+      "description": "官网",
+      "null_rule": "禁止为空"
+    },
+    {
+      "name": "deployment_source_url",
+      "type": "string",
+      "nullable": false,
+      "unit": null,
+      "description": "部署事实的官方出处",
+      "null_rule": "禁止为空"
+    },
+    {
+      "name": "mechanism_source_url",
+      "type": "string",
+      "nullable": true,
+      "unit": null,
+      "description": "机制的官方出处",
+      "null_rule": "未核实"
+    }
+  ]
+}
