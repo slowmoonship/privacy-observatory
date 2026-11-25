@@ -15,7 +15,7 @@ APPROVED_CODE = {
     "tests/phase3_public.py", "tests/phase4_refresh.py",
     "src/charts.tsx", "src/network.tsx", "src/zcashPools.tsx", "src/zcashSnapshot.ts",
     "scripts/network_economics.py", "tests/test_network_economics.py", "tests/zcash-snapshot.mjs",
-    "docs/v1.0-methodology.md",
+    "docs/v1.0-methodology.md", "docs/v1.0-release.md",
 }
 DATA_PATHS = {
     f"datasets/{name}/{filename}"

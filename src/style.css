@@ -64,3 +64,7 @@
   .protocol-directory{grid-template-columns:1fr}
   section:not(.hero):not(.sources){padding-top:54px}
 }
+
+.pool-widget{margin:16px 0;padding-top:16px;border-top:1px solid #e4e9e2}
+.pool-widget iframe{display:block;width:100%;max-width:440px;border:0;border-radius:12px}
+.pool-widget button{border:1px solid #c6d6ca;background:#edf4ee;color:#365f4a;font-weight:600}

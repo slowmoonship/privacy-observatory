@@ -79,6 +79,10 @@ async function main() {
       const context = await browser.newContext({viewport: {width, height}, acceptDownloads: true});
       const page = await context.newPage();
       const failures = [];
+      const widgetRequests = [];
+      page.on('request', request => {
+        if (request.url().startsWith('https://zeczcash.com/')) widgetRequests.push(request);
+      });
       page.on('pageerror', error => failures.push(error.message));
       page.on('console', message => { if (message.type() === 'error') failures.push(message.text()); });
       page.on('response', response => {
@@ -190,6 +194,20 @@ async function main() {
         'datasets/_sources/coin_metrics_pages.json.gz', 'docs/v1.0-phase1/evidence.json']) {
         assert.equal((await page.request.get(base + resource)).status(), 404, resource);
       }
+      assert.deepEqual(widgetRequests, [], 'third-party widget must not contact its host by default');
+      const widgetLink = page.waitForResponse(response =>
+        response.url() === 'https://zeczcash.com/embed/shielded-supply?theme=light');
+      await page.getByRole('button', {name: '加载 ZecZcash 挂件'}).click();
+      const widgetResponse = await widgetLink;
+      assert.equal(widgetResponse.status(), 200);
+      assert.match((await widgetResponse.allHeaders())['content-security-policy'], /default-src 'none'/);
+      assert.equal(await widgetResponse.headerValue('set-cookie'), null);
+      const widget = page.frameLocator('#pools iframe').locator('body');
+      assert.match(await widget.innerText(), /ZecZcash\.com/);
+      assert(await widget.evaluate(() => document.referrer === '' &&
+        document.documentElement.scrollWidth <= innerWidth && document.documentElement.scrollHeight <= innerHeight));
+      assert.equal(widgetRequests.length, 1);
+      assert(!((await widgetRequests[0].allHeaders()).referer));
       assert(await page.evaluate(() => document.documentElement.scrollWidth === innerWidth), 'horizontal overflow');
       assert.deepEqual(failures, []);
       if (screenshots) {

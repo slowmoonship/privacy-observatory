@@ -4,6 +4,8 @@
 
 - [生产网站](https://slowmoonship.github.io/privacy-observatory/)
 - [数据集目录](https://slowmoonship.github.io/privacy-observatory/#datasets)
+- [V1.0 版本说明](docs/v1.0-release.md)
+- [V1.0 指标口径](docs/v1.0-methodology.md)
 - [V0.2 版本与数据说明](docs/v0.2-release.md)
 - [V0.1 历史版本](https://github.com/slowmoonship/privacy-observatory/releases/tag/v0.1.0)
 
@@ -19,4 +21,4 @@
 
 ## 来源及口径
 
-市值和网络活动采用 Coin Metrics Community Data，经本站标准化和类型转换。CSV、Parquet 与网页来自同一版本化快照。Coin Metrics 和历史对照所用 PriFi 的 CC BY-NC 4.0 限制继续适用。协议目录引用各项目官方部署事实，不包含 TVL。Zcash 价值池及全链发行供应暂缓展示。[Coin Metrics 许可](https://github.com/coinmetrics/data#license) · [PriFi 授权](https://prifi.info/data/) · [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/)
+市值、网络活动和网络经济指标采用 Coin Metrics Community Data，经本站标准化、计算和类型转换。已有 CSV、Parquet 与网页对应指标来自同一版本化快照。Coin Metrics 和历史对照所用 PriFi 的 CC BY-NC 4.0 限制继续适用。协议目录引用各项目官方部署事实，不包含 TVL。本站 Zcash 价值池和全链发行供应暂未接入。页面可按需加载经授权的 ZecZcash 第三方日度快照挂件。[Coin Metrics 许可](https://github.com/coinmetrics/data#license) · [PriFi 授权](https://prifi.info/data/) · [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/)

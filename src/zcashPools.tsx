@@ -6,6 +6,21 @@ const labels = {sprout: 'Sprout', sapling: 'Sapling', orchard: 'Orchard', ironwo
   transparent: 'Transparent', lockbox: 'Lockbox'};
 const shielded = new Set<string>(shieldedPools);
 
+function ShieldedShareWidget() {
+  const [visible, setVisible] = useState(false);
+  return <aside className="pool-widget" aria-label="第三方屏蔽供应快照">
+    <h3>第三方屏蔽供应快照</h3>
+    <p>由 <a href="https://zeczcash.com/shielded" referrerPolicy="no-referrer">ZecZcash</a> 提供。
+      日期和延迟状态见挂件。点击加载会直接访问第三方站点。</p>
+    {visible
+      ? <iframe src="https://zeczcash.com/embed/shielded-supply?theme=light"
+          title="ZecZcash · Zcash 屏蔽供应占比"
+          width="440" height="200" referrerPolicy="no-referrer"
+          sandbox="allow-popups allow-popups-to-escape-sandbox"/>
+      : <button type="button" onClick={() => setVisible(true)}>加载 ZecZcash 挂件</button>}
+  </aside>;
+}
+
 export function ZcashPools({dataset}: {dataset?: Dataset}) {
   const [view, setView] = useState<ReturnType<typeof poolView>>();
   const [failed, setFailed] = useState(false);
@@ -44,6 +59,7 @@ export function ZcashPools({dataset}: {dataset?: Dataset}) {
         </dl>
         <p><a href={view.snapshot.source_url}>{view.snapshot.source} ↗</a> · {view.snapshot.source_license}</p>
       </>}
+      {view?.state === 'unavailable' && <ShieldedShareWidget/>}
       <p className="evidence">Sprout 在 NU7 后不可支出，仍计入账面余额。Transparent 与 Lockbox 单列。NSM 排除在已发行供应之外。这里采用节点的发行供应口径，与 Coin Metrics SplyCur 分列。</p>
       <p><a href="https://zips.z.cash/zip-0259">NU7 规则 ↗</a> · <a href="https://zebra.zfnd.org/next/dev/rfcs/0012-value-pools.html">Zebra 价值池规则 ↗</a></p>
       <DatasetLinks data={dataset}/>
