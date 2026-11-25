@@ -4,12 +4,13 @@ import argparse
 import shutil
 from pathlib import Path
 
-from prepare_public_site import CATALOG, COIN_INPUT, digest, read, verify_dist, write
+from prepare_public_site import CATALOG, COIN_INPUT, ECONOMICS, digest, read, verify_dist, write
 
 
 def export(dist, output):
     verify_dist(dist)
     output.mkdir(parents=True, exist_ok=False)
+    shutil.copyfile(dist / "datasets" / ECONOMICS, output / ECONOMICS)
     for name, policy in CATALOG.items():
         public = dist / "datasets" / name
         entry = read(public / "manifest.json")

@@ -10,6 +10,8 @@ import tempfile
 from pathlib import Path
 import shutil
 
+from network_economics import FILENAME as ECONOMICS, validate as validate_economics
+
 ROOT = Path(__file__).resolve().parents[1]
 STAGE = ROOT / ".cache/public-site"
 CATALOG = {
@@ -22,8 +24,8 @@ CATALOG = {
         finding="XMR 交易数与 PriFi 共同日期全等。ZEC 交易数存在来源差异。2018-04-26 和 2026-11-23 的两组结果可由不同 UTC 时间归桶复现，其余 3,530 个差异日未逐日归因。"),
     "privacy_protocol_registry": dict(title="隐私协议目录", status="Ready",
         summary="当前网页所列协议的主网部署记录。",
-        method="每行对应一个协议及一条链，依据协议官方资料核对代表性地址及角色。",
-        finding="RAILGUN 为隐私系统代理，Privacy Pools 为 Ethereum v2 Entrypoint，Privacy Cash 为 Solana Program。代表性地址仅覆盖列出的部署。"),
+        method="每行对应一个协议及一条链，按核验日期整理官方主网地址、角色、机制和资产类型。",
+        finding="主网部署的角色和官方出处逐行列出。Base 的 ScopeLift Umbra 和 Solana 的 Umbra Privacy 为不同项目。目录只记录核验范围内的部署事实。"),
     "zcash_value_pools_daily": dict(title="Zcash 每日价值池", status="Blocked",
         summary="ZecStats 来源的每日价值池和全链供应观测。",
         method="以 UTC 日为粒度。屏蔽余额包含 Sprout、Sapling、Orchard 和 Ironwood。Lockbox 单独核算。",
@@ -44,17 +46,25 @@ EXPECTED_COLUMNS = {
     "privacy_protocol_registry": {
         "protocol_id", "protocol_name", "chain_id", "chain_name", "privacy_mechanism",
         "deployment_role", "deployment_address", "website_url", "deployment_source_url",
-        "mechanism_source_url",
+        "mechanism_source_url", "supported_assets", "verified_utc",
     },
 }
 PROTOCOL_DEPLOYMENTS = {
     ("railgun", "eip155:1"), ("railgun", "eip155:56"), ("railgun", "eip155:137"),
     ("railgun", "eip155:42161"), ("privacy-pools", "eip155:1"),
     ("privacy-cash", "solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp"),
+    ("privacy-pools", "eip155:56"),
+    ("tornado-cash", "eip155:1"), ("tornado-cash", "eip155:56"),
+    ("tornado-cash", "eip155:42161"), ("tornado-cash", "eip155:10"),
+    ("scopelift-umbra", "eip155:8453"),
+    ("umbra-privacy", "solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp"),
 }
-PROTOCOL_OFFICIAL = {"docs.railgun.org", "docs.privacypools.com", "github.com"}
+PROTOCOL_OFFICIAL = {"docs.railgun.org", "docs.privacypools.com", "github.com",
+                     "docs.umbraprivacy.com", "docs.nimbusprivacy.xyz", "www.umbraprivacy.com"}
+POOL_STATUS_FILE = "zcash-pool-status.json"
+POOL_STATUS = {"status": "unavailable", "reason": "当前快照的公开展示和低频生产访问授权待确认。"}
 DOCUMENTS = ("schema.json", "methodology.html", "quality_report.html", "manifest.json")
-SUPPORT = {"datasets/index.json", "datasets/chart-data.json"}
+SUPPORT = {f"datasets/{name}" for name in ("index.json", "chart-data.json", ECONOMICS, POOL_STATUS_FILE)}
 
 
 def read(path):
@@ -118,6 +128,15 @@ def validate_source(folder, name, manifest):
                 or urlsplit(row[k] or "").netloc not in PROTOCOL_OFFICIAL
                 for row in rows for k in ("deployment_source_url", "mechanism_source_url")):
             raise ValueError("Unapproved protocol registry scope or source")
+        for row in rows:
+            date = dt.date.fromisoformat(row["verified_utc"])
+            address_pattern = (r"0x[a-fA-F0-9]{40}" if row["chain_id"].startswith("eip155:")
+                               else r"[1-9A-HJ-NP-Za-km-z]{32,44}")
+            if (date > dt.datetime.now(dt.timezone.utc).date() or
+                not re.fullmatch(address_pattern, row["deployment_address"] or "") or
+                not row["privacy_mechanism"] or not row["deployment_role"] or not row["supported_assets"] or
+                urlsplit(row["website_url"]).scheme != "https" or not urlsplit(row["website_url"]).hostname):
+                raise ValueError("Incomplete protocol deployment")
     expected_types = {
         "market_cap_usd": pa.decimal128(38, 27), "current_supply_native": pa.decimal128(24, 12),
         "transaction_count": pa.int64(),
@@ -180,7 +199,8 @@ def emit(source, target):
         if qualification["status"] != policy["status"] or manifest["dataset"] != name:
             raise ValueError(f"Unexpected release qualification: {name}")
         dt.date.fromisoformat(qualification["assessed_utc"])
-        if not re.fullmatch(r"0\.2\.0(?:-phase[0-9]+)?", manifest["version"]):
+        if not (re.fullmatch(r"0\.2\.0(?:-phase[0-9]+)?", manifest["version"]) or
+                (name == "privacy_protocol_registry" and manifest["version"] == "1.0.0")):
             raise ValueError(f"Unexpected dataset version: {name}")
         dest = parent / name
         dest.mkdir()
@@ -213,9 +233,7 @@ def emit(source, target):
             write(dest / "schema.json", {k: schema[k] for k in ("primary_key", "grain", "csv", "fields")})
             quality = {"检查": "主键唯一、必填非空、CSV 与 Parquet 全表一致",
                        "行数": len(rows), "各列空值": "，".join(f"{k} {v}" for k, v in nulls.items())}
-            chart[name] = chart_rows(rows, fields) if fields else [
-                {k: row[k] for k in ("protocol_id", "protocol_name", "chain_name", "website_url")} for row in rows
-            ]
+            chart[name] = chart_rows(rows, fields) if fields else rows
         updated = max(span["end"] for span in spans.values()) if spans else qualification["assessed_utc"]
         item = {"id": name, "title": policy["title"], "summary": policy["summary"], "grain": grain,
                 "status": policy["status"], "limitations": policy["finding"], "source": attribution,
@@ -249,6 +267,14 @@ def emit(source, target):
         index.append(item)
     write(parent / "index.json", index)
     write(parent / "chart-data.json", chart)
+    economics_path = source / ECONOMICS
+    if economics_path.is_symlink():
+        raise ValueError("Symlink in economics inputs")
+    economics = validate_economics(read(economics_path))
+    # Emit the checked object, never a directory of research inputs or fixtures.
+    (parent / ECONOMICS).write_text(json.dumps(economics, ensure_ascii=False, separators=(",", ":")) + "\n",
+                                    encoding="utf-8")
+    write(parent / POOL_STATUS_FILE, POOL_STATUS)
 
 
 def verify_dist(dist):

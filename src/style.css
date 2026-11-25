@@ -21,3 +21,46 @@
 .dataset-links a[download]{background:#eaf0ea;text-decoration:none;border-radius:5px;padding:6px 9px;font-weight:600}
 .dataset-links>span{flex-basis:100%;color:#617267}
 @media(max-width:700px){.dataset-grid{grid-template-columns:minmax(0,1fr)}.dataset-card,.pool-hold{padding:19px}}
+
+.nav nav{gap:18px;margin:0 0 0 auto;flex-wrap:wrap}
+.hero{min-height:370px}
+#activity,#economics,#design{scroll-margin-top:16px}
+.controls{flex-wrap:wrap;flex-shrink:0;max-width:58%}
+.chart-head > div:first-child{min-width:0}
+.chart-head select{color:#3c4e42}
+.chart-latest{display:flex;flex-wrap:wrap;gap:12px 25px;margin-top:15px}
+.chart-latest div{display:grid;gap:3px}
+.chart-latest span,.chart-source,.muted-note{font-size:12px;color:#5d6c62}
+.chart-latest strong{font-variant-numeric:tabular-nums;font-size:18px}
+.chart-source{display:flex;flex-wrap:wrap;gap:6px 14px;line-height:1.7}
+.chart-source a,.pool-hold a,.protocol a{color:#365f4a;text-decoration:underline;text-underline-offset:3px}
+.chart-empty{padding:30px 10px;color:#5d6c62}
+.pool-stats,.pool-balances{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.pool-stats > div,.pool-balances > div{background:#f4f7f3;padding:12px;border-radius:6px;overflow-wrap:anywhere}
+.pool-stats strong,.pool-balances small{display:block;margin-top:4px}
+.pool-stats small,.pool-balances small,.pool-balances dt{color:#526359}
+.pool-balances dd{margin:5px 0 0;font-variant-numeric:tabular-nums}
+.snapshot-meta code,.protocol code{overflow-wrap:anywhere}
+.technology{margin-top:16px;padding:24px}
+.technology-labels,.technology-row > div{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.technology-labels{color:#41634f;margin-bottom:16px}
+.technology-row{border-top:1px solid #e9eee8;padding:12px 0}
+.technology-row h3{font-size:13px;margin:0 0 6px}
+.technology-row p{font-size:13px;line-height:1.65;margin:0;color:#526359}
+.protocol-directory{display:grid;grid-template-columns:1fr 1fr;align-items:start;gap:10px}
+.protocol{padding:14px 17px;font-size:13px;line-height:1.65}
+.protocol summary{cursor:pointer}
+.protocol summary span{display:block;color:#65736a;margin-left:15px;font-size:12px}
+.protocol ul{padding-left:20px}
+.protocol p{margin:4px 0}
+.protocol li{margin:8px 0}
+@media(max-width:700px){
+  .nav{height:auto;min-height:66px;align-items:flex-start;justify-content:center;flex-direction:column;gap:10px;padding-top:12px;padding-bottom:10px}
+  .nav nav{display:flex;margin:0;gap:4px 11px;font-size:12px}
+  .hero{min-height:0;padding-top:36px}.hero-art{height:210px}.hero-art .three{width:205px;height:205px}
+  .hero-art .two{width:170px;height:170px}.hero-art .one{width:130px;height:130px}
+  .chart-card,.technology{padding:16px}.controls{max-width:100%;gap:5px}
+  .pool-stats,.pool-balances{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .protocol-directory{grid-template-columns:1fr}
+  section:not(.hero):not(.sources){padding-top:54px}
+}

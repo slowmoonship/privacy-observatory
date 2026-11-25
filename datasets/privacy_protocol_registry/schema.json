@@ -89,6 +89,22 @@
       "unit": null,
       "description": "机制的官方出处",
       "null_rule": "未核实"
+    },
+    {
+      "name": "supported_assets",
+      "type": "string",
+      "nullable": false,
+      "unit": null,
+      "description": "官方文档核验的代表性支持资产类型",
+      "null_rule": "禁止为空"
+    },
+    {
+      "name": "verified_utc",
+      "type": "string",
+      "nullable": false,
+      "unit": null,
+      "description": "官方资料复核日，UTC YYYY-MM-DD",
+      "null_rule": "禁止为空"
     }
   ]
 }

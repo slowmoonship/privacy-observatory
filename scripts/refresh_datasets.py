@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Refresh two full Coin Metrics histories into a separate, validated site input tree."""
+"""Refresh full legacy histories and display economics into a validated input tree."""
 import argparse
 import csv
 import datetime as dt
@@ -16,6 +16,7 @@ import pyarrow.parquet as pq
 
 from prepare_public_site import ROOT, coverage, digest, emit, read, validate_source, write
 from update_data import CM, fetch
+from network_economics import FILENAME as ECONOMICS, refresh as refresh_economics
 
 ASSETS = ("xmr", "zec")
 START = {"xmr": dt.date(2014, 4, 18), "zec": dt.date(2016, 10, 28)}
@@ -134,9 +135,12 @@ def refresh_table(folder, name, incoming, end):
           f"revision_first={dates[0] if dates else '-'} revision_last={dates[-1] if dates else '-'}")
 
 
-def refresh(source, destination, end):
+def refresh(source, destination, end, *, site_as_of=None):
     if destination.exists():
         raise ValueError("Output must be a new directory")
+    if site_as_of is not None and (site_as_of.utcoffset() != dt.timedelta(0)
+                                   or end != site_as_of.date() - dt.timedelta(days=1)):
+        raise ValueError("Site refresh requires the most recent complete UTC day")
     for name in DAILY:
         old = read(source / name / "manifest.json")
         dates = [old["coverage"][asset]["end"] for asset in ASSETS]
@@ -147,6 +151,11 @@ def refresh(source, destination, end):
         shutil.copytree(source, stage)
         for name in DAILY:
             refresh_table(stage / name, name, incoming, end)
+        if site_as_of is not None:
+            network = {(r["asset_id"], r["date_utc"]):
+                       (r["transaction_count"], r["current_supply_native"]) for r in incoming}
+            changed = refresh_economics(stage / ECONOMICS, end, site_as_of, network=network)
+            print(f"economics status={'updated' if changed else 'unchanged'} latest={end}", flush=True)
         emit(stage, Path(scratch) / "verify")
         stage.rename(destination)
 
@@ -156,9 +165,10 @@ def main():
     parser.add_argument("--source", type=Path, default=ROOT / "datasets")
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
-    end = dt.datetime.now(dt.timezone.utc).date() - dt.timedelta(days=1)
+    now = dt.datetime.now(dt.timezone.utc)
+    end = now.date() - dt.timedelta(days=1)
     try:
-        refresh(args.source, args.output, end)
+        refresh(args.source, args.output, end, site_as_of=now)
     except Exception as exc:
         raise SystemExit(f"Coin Metrics refresh/publication rejected for {end}. Previous complete inputs retained. {exc}") from exc
 

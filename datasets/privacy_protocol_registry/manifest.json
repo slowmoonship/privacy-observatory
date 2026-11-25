@@ -1,7 +1,7 @@
 {
   "dataset": "privacy_protocol_registry",
-  "version": "0.2.0",
-  "rows": 6,
+  "version": "1.0.0",
+  "rows": 13,
   "coverage": {},
   "release_qualification": {
     "status": "Ready",
@@ -9,16 +9,16 @@
   },
   "files": {
     "privacy_protocol_registry.csv": {
-      "sha256": "7175d7d0c357b863d213e6dba131ee0731b48e26e3eebd4bb3b8748f6c4c2477",
-      "bytes": 1733
+      "sha256": "8c195248f34d916ab70926ff1b5b75cd99b74914a7b57dea47ad799a14ee40a9",
+      "bytes": 4552
     },
     "privacy_protocol_registry.parquet": {
-      "sha256": "cdb1123e3291bd966a697ec945ce251325a9d57aec03c0d7d2a35562ba334069",
-      "bytes": 5831
+      "sha256": "67a5142a6e4bd50cdad1e5e18644a6cbc1504b1d0019fd88421b901505cf5260",
+      "bytes": 6410
     },
     "schema.json": {
-      "sha256": "7dfbed1f6f6cb1e8d36ca5895d867b0eb3eff25c93670b786a6af3f0b4d348ca",
-      "bytes": 2168
+      "sha256": "ba3ade018620b9535f89b116325870250b30164c566053a172673451826fc2a8",
+      "bytes": 2600
     }
   },
   "sources": []

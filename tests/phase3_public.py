@@ -11,7 +11,7 @@ import pyarrow as pa
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 from export_public_inputs import export
-from prepare_public_site import CATALOG, emit, read, validate_source, verify_dist
+from prepare_public_site import CATALOG, PROTOCOL_DEPLOYMENTS, POOL_STATUS, POOL_STATUS_FILE, emit, read, validate_source, verify_dist
 
 ARGS = None
 
@@ -34,12 +34,9 @@ class PublicSiteTests(unittest.TestCase):
             rows, _, _ = validate_source(folder, name, read(folder / "manifest.json"))
             self.assertEqual(item["rows"], len(rows))
             if name == "privacy_protocol_registry":
-                self.assertEqual(len(rows), 6)
+                self.assertEqual(len(rows), len(PROTOCOL_DEPLOYMENTS))
                 self.assertIn("零知识", (folder / f"{name}.csv").read_text(encoding="utf-8"))
-                self.assertEqual(chart[name], [
-                    {key: row[key] for key in ("protocol_id", "protocol_name", "chain_name", "website_url")}
-                    for row in rows
-                ])
+                self.assertEqual(chart[name], rows)
                 continue
             for asset, metrics in chart[name].items():
                 subset = sorted((r for r in rows if r["asset_id"] == asset), key=lambda r: r["date_utc"])
@@ -50,6 +47,18 @@ class PublicSiteTests(unittest.TestCase):
                                      [day for day, v in points if v is not None][-1])
                 if "transaction_count" in metrics:
                     self.assertTrue(all(type(r["transaction_count"]) is int for r in subset))
+
+    def test_public_pool_status_does_not_contain_any_observations(self):
+        self.assertEqual(read(ARGS.dist / "datasets" / POOL_STATUS_FILE), POOL_STATUS)
+        with tempfile.TemporaryDirectory() as scratch:
+            source = Path(scratch) / "inputs"
+            shutil.copytree(ROOT / "datasets", source)
+            (source / POOL_STATUS_FILE).write_text('{"status":"available","chain_supply_zat":"1"}')
+            (source / "restricted-evidence.json").write_text('{"restricted":true}')
+            tree = Path(scratch) / "public"
+            emit(source, tree)
+            self.assertEqual(read(tree / "datasets" / POOL_STATUS_FILE), POOL_STATUS)
+            self.assertFalse((tree / "datasets/restricted-evidence.json").exists())
 
     def test_no_internal_inputs_needed_for_repeat(self):
         with tempfile.TemporaryDirectory() as scratch:
