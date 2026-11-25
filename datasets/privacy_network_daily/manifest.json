@@ -1,38 +1,38 @@
 {
   "dataset": "privacy_network_daily",
   "version": "0.2.0",
-  "rows": 8282,
+  "rows": 8284,
   "coverage": {
     "xmr": {
       "start": "2014-04-18",
-      "end": "2026-11-23",
-      "rows": 4603,
+      "end": "2026-11-24",
+      "rows": 4604,
       "valid": {
         "transaction_count": {
           "start": "2014-04-18",
-          "end": "2026-11-23",
+          "end": "2026-11-24",
           "null_rows": 0
         },
         "current_supply_native": {
           "start": "2014-04-18",
-          "end": "2026-11-23",
+          "end": "2026-11-24",
           "null_rows": 0
         }
       }
     },
     "zec": {
       "start": "2016-10-28",
-      "end": "2026-11-23",
-      "rows": 3679,
+      "end": "2026-11-24",
+      "rows": 3680,
       "valid": {
         "transaction_count": {
           "start": "2016-10-28",
-          "end": "2026-11-23",
+          "end": "2026-11-24",
           "null_rows": 0
         },
         "current_supply_native": {
           "start": "2016-10-28",
-          "end": "2026-11-23",
+          "end": "2026-11-24",
           "null_rows": 0
         }
       }
@@ -44,12 +44,12 @@
   },
   "files": {
     "privacy_network_daily.csv": {
-      "sha256": "c22f069a1d851b81c9ae9a5e2701cdfdf0bea5235fd0d894aa246525cbebcfe1",
-      "bytes": 373478
+      "sha256": "9710d9e7b30ad606e8cee578029669cac9201cfe05cd9ed98f9e67ea613b5c2e",
+      "bytes": 373569
     },
     "privacy_network_daily.parquet": {
-      "sha256": "c92bae6a642b79ef3d4cb18b27a6b371c1b5f0bdcd6c11e1259d3f4371c8ee87",
-      "bytes": 143989
+      "sha256": "26f9426ce9bfbe1fadcb794690ce07b3a976b87e884837911361227f9cffc281",
+      "bytes": 138022
     },
     "schema.json": {
       "sha256": "684a96c65c88d057bdb4d6ae577b5a830708faf40c404494a599e96eb5163e3b",
@@ -64,8 +64,8 @@
     }
   ],
   "refresh": {
-    "observed_through_utc": "2026-11-23",
-    "new_rows": 0,
+    "observed_through_utc": "2026-11-24",
+    "new_rows": 2,
     "revised_rows": 0,
     "revision_first_utc": null,
     "revision_last_utc": null,
