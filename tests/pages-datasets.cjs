@@ -222,7 +222,7 @@ async function main() {
       await page.reload();
       await page.getByText('部分研究数据暂不可用，缺失值保留为空。').waitFor();
       await page.locator('#economics .chart-empty').waitFor();
-      assert.equal(await page.locator('#datasets a[download]').count(), 6);
+      await page.waitForFunction(() => document.querySelectorAll('#datasets a[download]').length === 6);
       await page.route('**/datasets/chart-data.json', route => route.fulfill({status: 503, body: '{}'}));
       await page.reload();
       await page.getByText('部分研究数据暂不可用，缺失值保留为空。').waitFor();
