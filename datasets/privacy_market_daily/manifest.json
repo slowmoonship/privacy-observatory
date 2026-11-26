@@ -1,28 +1,28 @@
 {
   "dataset": "privacy_market_daily",
   "version": "0.2.0",
-  "rows": 8284,
+  "rows": 8286,
   "coverage": {
     "xmr": {
       "start": "2014-04-18",
-      "end": "2026-11-24",
-      "rows": 4604,
+      "end": "2026-11-25",
+      "rows": 4605,
       "valid": {
         "market_cap_usd": {
           "start": "2014-05-20",
-          "end": "2026-11-24",
+          "end": "2026-11-25",
           "null_rows": 32
         }
       }
     },
     "zec": {
       "start": "2016-10-28",
-      "end": "2026-11-24",
-      "rows": 3680,
+      "end": "2026-11-25",
+      "rows": 3681,
       "valid": {
         "market_cap_usd": {
           "start": "2016-10-29",
-          "end": "2026-11-24",
+          "end": "2026-11-25",
           "null_rows": 1
         }
       }
@@ -34,12 +34,12 @@
   },
   "files": {
     "privacy_market_daily.csv": {
-      "sha256": "bf578d8d7bfdec3452fcbaadf1786c10aa159377cc903436339196fb52657c31",
-      "bytes": 445645
+      "sha256": "9be8eb96944183b648db5c70765e049d61743bcec7fc42b201417d3137939445",
+      "bytes": 445752
     },
     "privacy_market_daily.parquet": {
-      "sha256": "b224cf51706d6a468072943eff6825f0bd2cd7fa83a568ceae8c5e5fa53f4561",
-      "bytes": 162881
+      "sha256": "b9c196efd4ff3dae957a90bb48e7610526efef14af6d2dfe01a72e51aa5474fe",
+      "bytes": 168902
     },
     "schema.json": {
       "sha256": "0f4d259f7921898c5ebf6523b409225971ed88d2df4df890acad815b3398871b",
@@ -54,7 +54,7 @@
     }
   ],
   "refresh": {
-    "observed_through_utc": "2026-11-24",
+    "observed_through_utc": "2026-11-25",
     "new_rows": 2,
     "revised_rows": 0,
     "revision_first_utc": null,
