@@ -1,38 +1,38 @@
 {
   "dataset": "privacy_network_daily",
   "version": "0.2.0",
-  "rows": 8288,
+  "rows": 8290,
   "coverage": {
     "xmr": {
       "start": "2014-04-18",
-      "end": "2026-11-26",
-      "rows": 4606,
+      "end": "2026-11-27",
+      "rows": 4607,
       "valid": {
         "transaction_count": {
           "start": "2014-04-18",
-          "end": "2026-11-26",
+          "end": "2026-11-27",
           "null_rows": 0
         },
         "current_supply_native": {
           "start": "2014-04-18",
-          "end": "2026-11-26",
+          "end": "2026-11-27",
           "null_rows": 0
         }
       }
     },
     "zec": {
       "start": "2016-10-28",
-      "end": "2026-11-26",
-      "rows": 3682,
+      "end": "2026-11-27",
+      "rows": 3683,
       "valid": {
         "transaction_count": {
           "start": "2016-10-28",
-          "end": "2026-11-26",
+          "end": "2026-11-27",
           "null_rows": 0
         },
         "current_supply_native": {
           "start": "2016-10-28",
-          "end": "2026-11-26",
+          "end": "2026-11-27",
           "null_rows": 0
         }
       }
@@ -44,12 +44,12 @@
   },
   "files": {
     "privacy_network_daily.csv": {
-      "sha256": "62c9930ac53af13b77c474bfe476b173ac6c33a66c47829d423ea6f75143f8bf",
-      "bytes": 373751
+      "sha256": "92e3b30ee9a137f585871214d973853b7cbb2d402c4c91e58826c2d2d41f0b80",
+      "bytes": 373842
     },
     "privacy_network_daily.parquet": {
-      "sha256": "550b421eb7df84386d589124dc544c7b9db1836384f96ca396d406e4fad21f64",
-      "bytes": 144054
+      "sha256": "2f26def1c1b3bbfdbd22e10d44a05a9923f3bcfab4b13719cc7ab812cf133abd",
+      "bytes": 144115
     },
     "schema.json": {
       "sha256": "684a96c65c88d057bdb4d6ae577b5a830708faf40c404494a599e96eb5163e3b",
@@ -64,7 +64,7 @@
     }
   ],
   "refresh": {
-    "observed_through_utc": "2026-11-26",
+    "observed_through_utc": "2026-11-27",
     "new_rows": 2,
     "revised_rows": 0,
     "revision_first_utc": null,
